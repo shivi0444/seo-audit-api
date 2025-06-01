@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEO Audit Tool – YellowInk Digital</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    input, button { padding: 0.5rem; margin: 0.5rem 0; width: 100%; }
+    pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; }
+    .result { margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>SEO Audit Tool</h1>
+  <p>Enter your website URL below to run a free SEO check.</p>
+
+  <input type="text" id="urlInput" placeholder="https://example.com">
+  <button onclick="runAudit()">Run Audit</button>
+
+  <div id="results" class="result" style="display:none;">
+    <h2>Audit Results</h2>
+    <pre id="resultBox"></pre>
+    <button onclick="downloadPDF()">Download Full Report</button>
+  </div>
+
+  <script>
+    async function runAudit() {
+      const url = document.getElementById('urlInput').value;
+      const response = await fetch('http://127.0.0.1:5000/api/seo-audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+
+      const data = await response.json();
+      document.getElementById('resultBox').textContent = JSON.stringify(data, null, 2);
+      document.getElementById('results').style.display = 'block';
+    }
+
+    function downloadPDF() {
+      alert("PDF download will be added next!");
+    }
+  </script>
+
+</body>
+</html>
